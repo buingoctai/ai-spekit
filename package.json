@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx exec -- echo 'Starting ai-spekit...'"
+    "start": "nx exec -- echo 'Starting ai-spekit...'",
+    "build": "nx run-many --target=build",
+    "test": "nx run-many --target=test",
+    "lint": "nx run-many --target=lint"
   },
   "private": true,
   "workspaces": [
@@ -11,6 +14,7 @@
   ],
   "devDependencies": {
     "nx": "latest",
+    "@nx/js": "latest",
     "typescript": "latest"
   }
 }
