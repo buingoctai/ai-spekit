@@ -13,8 +13,12 @@
     "packages/*"
   ],
   "devDependencies": {
-    "nx": "latest",
     "@nx/js": "latest",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0",
+    "nx": "latest",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
     "typescript": "latest"
   }
 }
