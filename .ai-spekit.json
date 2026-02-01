@@ -1,0 +1,44 @@
+{
+    "name": "ai-spekit",
+    "version": "0.1.0",
+    "environments": [
+        "antigravity"
+    ],
+    "initializedPhases": [
+        "requirements",
+        "design",
+        "planning",
+        "implementation",
+        "testing"
+    ],
+    "description": "The Cognitive Operating System for the Software Product Engineer (SPE)",
+    "phases": {
+        "requirements": {
+            "status": "active",
+            "docs": "docs/ai/requirements"
+        },
+        "design": {
+            "status": "pending",
+            "docs": "docs/ai/design"
+        },
+        "planning": {
+            "status": "pending",
+            "docs": "docs/ai/planning"
+        },
+        "implementation": {
+            "status": "pending",
+            "docs": "docs/ai/implementation"
+        },
+        "testing": {
+            "status": "pending",
+            "docs": "docs/ai/testing"
+        }
+    },
+    "context": {
+        "architecture": "Nx Monorepo (TypeScript)",
+        "core_packages": [
+            "packages/cli",
+            "packages/execution-engine"
+        ]
+    }
+}
