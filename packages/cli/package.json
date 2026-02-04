@@ -3,10 +3,15 @@
     "version": "0.1.0",
     "description": "CLI orchestrator for ai-spekit",
     "main": "dist/index.js",
+    "bin": {
+        "spekit": "./dist/index.js"
+    },
     "scripts": {
         "build": "tsc",
         "start": "node dist/index.js",
-        "test": "jest"
+        "test": "jest",
+        "prepublishOnly": "npm run build",
+        "prepare": "npm run build"
     },
     "dependencies": {
         "chalk": "^4.1.2",

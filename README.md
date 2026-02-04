@@ -60,6 +60,37 @@ This project is an **Nx Monorepo**.
 npm install
 ```
 
+## 🚀 Installation
+
+### Prerequisites
+- **Node.js** (latest LTS recommended)
+- **npm** (comes with Node.js)
+
+### Method A: Install via GitHub (For Users)
+The easiest way to use `spekit` globally without cloning the repo:
+
+```bash
+npm install -g git+https://github.com/buingoctai/ai-spekit.git
+```
+
+### Method B: Local Linking (For Developers)
+Best for contributors who want to modify the code and see changes instantly:
+
+1. Navigate to the CLI package:
+   ```bash
+   cd packages/cli
+   ```
+
+2. Link the package globally:
+   ```bash
+   npm link
+   ```
+
+> **Usage Note**: Verify installation by running:
+> ```bash
+> spekit --version
+> ```
+
 ### Structure
 - `packages/cli`: The core orchestrator.
 - `packages/execution-engine`: Phase 1 logic core.
