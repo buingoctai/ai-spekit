@@ -1,13 +1,13 @@
 import { Command } from 'commander';
-import { AgentManager } from './lib/AgentManager';
+// import { AgentManager } from './lib/AgentManager';
 import { Config } from './lib/Config';
 import { TemplateManager } from './lib/TemplateManager';
 import { registerInitCommand } from './commands/init';
 import { registerPhaseCommand } from './commands/phase';
-import { registerAgentCommand } from './commands/agent';
+// import { registerAgentCommand } from './commands/agent';
 
 const program = new Command();
-const agentManager = new AgentManager();
+// const agentManager = new AgentManager();
 const templateManager = new TemplateManager();
 const config = new Config();
 
@@ -19,6 +19,6 @@ program
 // Register modular commands
 registerInitCommand(program, config, templateManager);
 registerPhaseCommand(program, config, templateManager);
-registerAgentCommand(program, agentManager);
+// registerAgentCommand(program, agentManager);
 
 export { program };
