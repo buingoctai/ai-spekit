@@ -90,3 +90,40 @@ Since this is a monorepo, the best way to install the CLI globally is to link it
 ### Structure
 - `packages/cli`: The core orchestrator.
 - `packages/execution-engine`: Phase 1 logic core.
+
+## 📖 Usage
+
+### Initialization
+Initialize a new AI-enhanced project or add AI capabilities to an existing one:
+
+```bash
+spekit init --environment gemini
+```
+
+**Options:**
+- `-e, --environment <env>`: Specify the AI environment (e.g., `gemini`, `cursor`, `claude`).
+- `-a, --all`: Initialize all development phases (requirements, design, planning, etc.).
+- `-p, --phases <phases>`: Initialize specific phases (comma-separated).
+
+### Generated Structure
+Running `spekit init` will create the following structure in your project:
+
+```
+.
+├── .ai-spekit.json       # Project configuration
+├── AGENTS.md             # AI Agent role definitions
+├── docs/
+│   └── ai/               # Documentation for AI phases
+│       ├── requirements/
+│       ├── design/
+│       └── ...
+└── .gemini/              # (If gemini environment selected)
+    └── commands/         # Custom Gemini CLI commands
+        ├── review-requirements.toml
+        ├── code-review.toml
+        └── ...
+```
+
+### AI Integration
+- **Gemini**: The `.gemini/commands` folder contains TOML files that define custom commands for the Gemini CLI. You can use these commands immediately to interact with your project documentation and code.
+
