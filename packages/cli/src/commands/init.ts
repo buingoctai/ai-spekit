@@ -3,49 +3,103 @@ import inquirer from 'inquirer';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Config } from '../lib/Config';
+import { TemplateManager, Phase } from '../lib/TemplateManager';
 import chalk from 'chalk';
 
-export function registerInitCommand(program: Command, config: Config) {
+export function registerInitCommand(program: Command, config: Config, templateManager: TemplateManager) {
     program.command('init')
         .description('Initialize ai-spekit in the current directory')
-        .action(async () => {
+        .option('-e, --environment <env>', 'Specify environment (antigravity|gemini|cursor|claude)')
+        .option('-a, --all', 'Initialize all phases')
+        .option('-p, --phases <phases>', 'Comma-separated list of phases to initialize')
+        .action(async (options) => {
             console.log(chalk.blue('🤖 Initializing ai-spekit...'));
 
-            const answers = await inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'projectName',
-                    message: 'What is the name of your project?',
-                    default: path.basename(process.cwd())
-                },
-                {
-                    type: 'checkbox',
-                    name: 'environments',
-                    message: 'Which environments do you want to support?',
-                    choices: ['antigravity', 'local', 'ci'],
-                    default: ['antigravity']
-                }
-            ]);
+            let projectName = path.basename(process.cwd());
+            let contexts: string[] = [];
 
-            // 1. Initialize .ai-spekit.json
+            // 1. Determine Project Name (skip prompt if we want, but usually init requires it? 
+            // For now, let's keep it interactive only if not provided? 
+            // The prompt "What is the name of your project?" default is current dir.
+            // If user uses flags, maybe they expect less interaction.
+            // But let's keep the name prompt or default it if non-interactive mode is implied?
+            // The user didn't ask for non-interactive name, just env/phases.
+            // Let's assume we still ask for name unless we want to add a flag for it too.
+            // For checking "interactive mode", we can look at options.
+            
+            // To be safe and minimal change:
+            if (!options.environment && !options.all && !options.phases) {
+                 const answers = await inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'projectName',
+                        message: 'What is the name of your project?',
+                        default: projectName
+                    },
+                    {
+                        type: 'checkbox',
+                        name: 'environments',
+                        message: 'Which environments do you want to support?',
+                        choices: ['antigravity', 'gemini', 'cursor', 'claude', 'local', 'ci'],
+                        default: ['antigravity']
+                    }
+                ]);
+                projectName = answers.projectName;
+                contexts = answers.environments;
+            } else {
+                 // Non-interactive / Flag mode for environment
+                 if (options.environment) {
+                     contexts = options.environment.split(',').map((e: string) => e.trim());
+                 } else {
+                     // Default if not specified but other flags are
+                     contexts = ['antigravity'];
+                 }
+                 // We accept default project name in this mode to avoid prompt mixing
+            }
+
+            // 2. Determine Phases
+            let targetPhases: Phase[] = [];
+            if (options.all) {
+                targetPhases = ['requirements', 'design', 'planning', 'implementation', 'testing'];
+            } else if (options.phases) {
+                const pList = options.phases.split(',').map((p: string) => p.trim() as Phase);
+                 // valid check?
+                 const validPhases: Phase[] = ['requirements', 'design', 'planning', 'implementation', 'testing'];
+                 targetPhases = pList.filter((p: Phase) => validPhases.includes(p));
+            }
+
+            // 3. Initialize .ai-spekit.json
             const configState = {
                 version: '0.1.0',
-                initializedPhases: [],
-                environments: answers.environments,
+                initializedPhases: targetPhases, 
+                environments: contexts,
                 phases: {},
                 context: {
-                    projectName: answers.projectName
+                    projectName: projectName
                 }
             };
 
             await config.save(configState);
             console.log(chalk.green('✔ Initialized .ai-spekit.json'));
 
-            // 2. Setup directory structure
+            // 4. Setup directory structure & Gemini
             await fs.ensureDir(path.join(process.cwd(), 'docs/ai'));
             console.log(chalk.green('✔ Created docs/ai directory'));
 
-            // 3. Generate AGENTS.md
+            // Create phase directories if requested
+            for (const phase of targetPhases) {
+                await fs.ensureDir(path.join(process.cwd(), 'docs/ai', phase));
+                console.log(chalk.green(`✔ Initialized phase directory: docs/ai/${phase}`));
+            }
+            
+            // Handle Gemini Environment
+            if (contexts.includes('gemini')) {
+                // await fs.ensureDir(path.join(process.cwd(), '.gemini/commands')); // Done inside generateGeminiCommands
+                console.log(chalk.magenta('✔ Creating .gemini/commands for Gemini environment...'));
+                await templateManager.generateGeminiCommands(process.cwd());
+            }
+
+            // 5. Generate AGENTS.md
             const agentsMdContent = `# Active Intelligence Agents
 
 This file tracks the agents active in this workspace.
@@ -63,6 +117,10 @@ This file tracks the agents active in this workspace.
             console.log(chalk.green('✔ Generated AGENTS.md'));
 
             console.log(chalk.blue('\nProject initialized successfully! 🚀'));
-            console.log('Run `spekit phase start requirements` to begin.');
+            if (targetPhases.length === 0) {
+                 console.log('Run `spekit phase start requirements` to begin.');
+            } else {
+                 console.log(`Initialized phases: ${targetPhases.join(', ')}`);
+            }
         });
 }

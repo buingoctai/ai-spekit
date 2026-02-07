@@ -11,11 +11,13 @@ export type Phase = 'requirements' | 'design' | 'planning' | 'implementation' | 
  */
 export class TemplateManager {
     private templatesDir: string;
+    private workflowsDir: string;
 
     constructor() {
         // Determine the templates directory relative to this file
         // Assumes structure: packages/cli/src/lib/TemplateManager.ts -> packages/cli/templates
         this.templatesDir = path.resolve(__dirname, '../../templates/phases');
+        this.workflowsDir = path.resolve(__dirname, '../../templates/workflows');
     }
 
     /**
@@ -70,5 +72,47 @@ export class TemplateManager {
         } catch (error: any) {
             throw new Error(`Failed to scaffold document at ${targetPath}: ${error.message}`);
         }
+    }
+
+    /**
+     * Generates Gemini CLI commands from workflow templates.
+     */
+    async generateGeminiCommands(projectRoot: string): Promise<void> {
+        const commandDir = path.join(projectRoot, '.gemini/commands');
+        await fs.mkdir(commandDir, { recursive: true });
+
+        try {
+            const files = await fs.readdir(this.workflowsDir);
+            for (const file of files) {
+                if (!file.endsWith('.md')) continue;
+
+                const content = await fs.readFile(path.join(this.workflowsDir, file), 'utf-8');
+                const { description, body } = this.parseFrontMatter(content);
+                const commandName = path.basename(file, '.md');
+
+                // Escape double quotes in body for TOML string
+                const escapedBody = body.replace(/"""/g, '\\"\\"\\"'); 
+                const tomlContent = `description = "${description}"\n\nprompt = """\n${escapedBody}\n"""`;
+                
+                await fs.writeFile(path.join(commandDir, `${commandName}.toml`), tomlContent);
+                console.log(`✔ Generated command: .gemini/commands/${commandName}.toml`);
+            }
+        } catch (error: any) {
+            // If workflows dir doesn't exist or other error, warn but don't fail init hard
+            console.warn(`Warning: Failed to generate Gemini commands: ${error.message}`);
+        }
+    }
+
+    private parseFrontMatter(content: string): { description: string, body: string } {
+        // Simple regex for --- description: ... ---
+        const match = content.match(/^---\n([\s\S]+?)\n---\n([\s\S]+)$/);
+        if (match) {
+            const frontMatter = match[1];
+            const body = match[2];
+            const descMatch = frontMatter.match(/description:\s*(.+)/);
+            const description = descMatch ? descMatch[1].trim() : '';
+            return { description, body: body.trim() };
+        }
+        return { description: '', body: content.trim() };
     }
 }

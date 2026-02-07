@@ -17,7 +17,7 @@ program
     .version('0.1.0');
 
 // Register modular commands
-registerInitCommand(program, config);
+registerInitCommand(program, config, templateManager);
 registerPhaseCommand(program, config, templateManager);
 registerAgentCommand(program, agentManager);
 
