@@ -27,6 +27,8 @@ export function registerInitCommand(program: Command, config: Config, templateMa
             // Let's assume we still ask for name unless we want to add a flag for it too.
             // For checking "interactive mode", we can look at options.
             
+            let targetPhases: Phase[] = [];
+
             // To be safe and minimal change:
             if (!options.environment && !options.all && !options.phases) {
                  const answers = await inquirer.prompt([
@@ -42,10 +44,18 @@ export function registerInitCommand(program: Command, config: Config, templateMa
                         message: 'Which environments do you want to support?',
                         choices: ['antigravity', 'gemini', 'cursor', 'claude', 'local', 'ci'],
                         default: ['antigravity']
+                    },
+                    {
+                        type: 'checkbox',
+                        name: 'phases',
+                        message: 'Which phases do you want to initialize now?',
+                        choices: ['requirements', 'design', 'planning', 'implementation', 'testing'],
+                        default: []
                     }
                 ]);
                 projectName = answers.projectName;
                 contexts = answers.environments;
+                targetPhases = answers.phases;
             } else {
                  // Non-interactive / Flag mode for environment
                  if (options.environment) {
@@ -57,15 +67,16 @@ export function registerInitCommand(program: Command, config: Config, templateMa
                  // We accept default project name in this mode to avoid prompt mixing
             }
 
-            // 2. Determine Phases
-            let targetPhases: Phase[] = [];
-            if (options.all) {
-                targetPhases = ['requirements', 'design', 'planning', 'implementation', 'testing'];
-            } else if (options.phases) {
-                const pList = options.phases.split(',').map((p: string) => p.trim() as Phase);
-                 // valid check?
-                 const validPhases: Phase[] = ['requirements', 'design', 'planning', 'implementation', 'testing'];
-                 targetPhases = pList.filter((p: Phase) => validPhases.includes(p));
+            // 2. Determine Phases (if not already set by interactive mode)
+            if (targetPhases.length === 0) {
+                if (options.all) {
+                    targetPhases = ['requirements', 'design', 'planning', 'implementation', 'testing'];
+                } else if (options.phases) {
+                    const pList = options.phases.split(',').map((p: string) => p.trim() as Phase);
+                    // valid check?
+                    const validPhases: Phase[] = ['requirements', 'design', 'planning', 'implementation', 'testing'];
+                    targetPhases = pList.filter((p: Phase) => validPhases.includes(p));
+                }
             }
 
             // 3. Initialize .ai-spekit.json

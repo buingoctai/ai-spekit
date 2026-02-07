@@ -96,14 +96,38 @@ Since this is a monorepo, the best way to install the CLI globally is to link it
 ### Initialization
 Initialize a new AI-enhanced project or add AI capabilities to an existing one:
 
+**Interactive Mode (Recommended):**
 ```bash
-spekit init --environment gemini
+spekit init
+```
+This will guide you through setting up your project name, environments, and initial phases.
+
+**Command Line Flags:**
+```bash
+# Initialize with Gemini environment and Requirements phase
+spekit init --environment gemini --phases requirements
+
+# Initialize with multiple environments and ALL phases
+spekit init -e gemini,cursor -a
 ```
 
 **Options:**
 - `-e, --environment <env>`: Specify the AI environment (e.g., `gemini`, `cursor`, `claude`).
 - `-a, --all`: Initialize all development phases (requirements, design, planning, etc.).
 - `-p, --phases <phases>`: Initialize specific phases (comma-separated).
+
+### Phase Management
+Start working on a specific development phase (scaffolds documentation):
+
+```bash
+# Start the requirements phase (interactive)
+spekit phase start requirements
+
+# Select phase from a list
+spekit phase start
+```
+
+### Generated Structure
 
 ### Generated Structure
 Running `spekit init` will create the following structure in your project:
