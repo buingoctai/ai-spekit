@@ -86,12 +86,39 @@ export class TemplateManager {
             for (const file of files) {
                 if (!file.endsWith('.md')) continue;
 
-                const content = await fs.readFile(path.join(this.workflowsDir, file), 'utf-8');
+                let content = await fs.readFile(path.join(this.workflowsDir, file), 'utf-8');
+
+                // Handle {{INCLUDE:path/to/file}}
+                // Path is relative to the `templates` root (parent of workflowsDir)
+                // e.g. {{INCLUDE:phases/requirements.md}} -> ../phases/requirements.md
+                const includeRegex = /{{INCLUDE:([\w\-\.\/]+)}}/g;
+                let match;
+                while ((match = includeRegex.exec(content)) !== null) {
+                    const includePath = match[1];
+                    const fullIncludePath = path.resolve(this.workflowsDir, '../', includePath);
+                    
+                    try {
+                        const includeContent = await fs.readFile(fullIncludePath, 'utf-8');
+                        // Replace the tag with content
+                        // We use string replacement. To avoid regex issues with special chars in content,
+                        // we can use split/join or careful replacement.
+                        // Since we are iterating, we need to be careful about index shifts if we strictly use exec index.
+                        // Simpler approach: replace all occurrences of this specific match string.
+                        content = content.replace(match[0], includeContent);
+                    } catch (err: any) {
+                        console.warn(`Warning: Failed to include template '${includePath}' in '${file}': ${err.message}`);
+                    }
+                }
+
                 const { description, body } = this.parseFrontMatter(content);
                 const commandName = path.basename(file, '.md');
 
                 // Escape double quotes in body for TOML string
-                const escapedBody = body.replace(/"""/g, '\\"\\"\\"'); 
+                // Also escape backslashes to avoid TOML parse errors
+                const escapedBody = body
+                    .replace(/\\/g, '\\\\')
+                    .replace(/"/g, '\\"');
+                
                 const tomlContent = `description = "${description}"\n\nprompt = """\n${escapedBody}\n"""`;
                 
                 await fs.writeFile(path.join(commandDir, `${commandName}.toml`), tomlContent);

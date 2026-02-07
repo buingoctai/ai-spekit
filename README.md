@@ -151,3 +151,20 @@ Running `spekit init` will create the following structure in your project:
 ### AI Integration
 - **Gemini**: The `.gemini/commands` folder contains TOML files that define custom commands for the Gemini CLI. You can use these commands immediately to interact with your project documentation and code.
 
+## Developing the CLI
+
+If you are contributing to `ai-spekit` or running it locally from source:
+
+1.  **Develop & Build**:
+    ```bash
+    cd packages/cli
+    npm link             # Link the package globally
+    npm run build        # Compile changes
+    # or
+    npm run watch        # Watch for changes
+    ```
+
+2.  **Propagating Updates to Projects**:
+    -   **Code/Logic Changes**: Just rebuild the CLI. The linked `spekit` command uses the latest build automatically.
+    -   **Template/Prompt Changes**: You must rebuild **AND** run `spekit init` (or `spekit init -e gemini`) in your target project again. This is required to regenerate the `.gemini/commands/*.toml` files with your new templates.
+

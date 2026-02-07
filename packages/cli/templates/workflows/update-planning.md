@@ -10,9 +10,12 @@ Keep the `task.md` and `plan.json` in sync with reality.
 - **Input**: What did we just finish? What failed?
 - **Context**: Read current plan files.
 
-## Step 2: Mark Progress
-- **Action**: Check `[x]` for completed items.
-- **Note**: Add comments for partial completions.
+## Step 3: Draft Plan
+- **Action**: Create the implementation plan.
+- **Filename**: `docs/ai/planning/[FEATURE-NAME].md`
+- **Template Content**:
+{{INCLUDE:phases/planning.md}}
+- **Fill**: Break down tasks into checklist items.
 
 ## Step 3: Handle Blockers
 - **Identify**: Is a task blocked?

@@ -10,15 +10,22 @@ This workflow guides the creation of unit and integration tests.
 - **Input**: User selects files or functions to test.
 - **Context**: Read the implementation code to understand logic.
 
-## Step 2: Scaffold Test File
+## Step 2: Document Tests
+- **Action**: Create a test plan document.
+- **Filename**: `docs/ai/testing/[FEATURE-NAME].md`
+- **Template Content**:
+{{INCLUDE:phases/testing.md}}
+- **Fill**: Detail test cases and scenarios.
+
+## Step 3: Scaffold Test File
 - **Action**: Create `*.spec.ts` or `*.test.ts`.
 - **Imports**: Setup describe/it blocks and import dependencies.
 
-## Step 3: Define Scenarios
+## Step 4: Define Scenarios
 - **Happy Path**: Write test for expected behavior.
 - **Edge Cases**: Write tests for null inputs, errors, and boundary values.
 
-## Step 4: Run & Refine
+## Step 5: Run & Refine
 - **Execute**: Run `nx test` (or specific test command).
 - **Fix**: Adjust test or code until green.
 

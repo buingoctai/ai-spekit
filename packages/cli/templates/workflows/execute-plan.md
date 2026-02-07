@@ -26,6 +26,13 @@ This workflow guides the agent through the process of taking a planned feature f
 - Propose the next specific task to work on.
 - **Action**: Ask user for confirmation to proceed with this specific task.
 
+## Step 2: Implementation Log
+- **Action**: Maintain a running log of changes.
+- **Filename**: `docs/ai/implementation/[FEATURE-NAME].md`
+- **Template Content**:
+{{INCLUDE:phases/implementation.md}}
+- **Update**: Record each significant change and decision.
+
 ## Step 5: Execute Task
 - **Mode**: Switch to `EXECUTION`.
 - detailed implementation:
