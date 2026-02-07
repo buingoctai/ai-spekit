@@ -52,4 +52,7 @@ This workflow guides the agent through the process of taking a planned feature f
 ## Step 8: Loop or Exit
 - **Decision**: Are there more tasks?
     - **Yes**: Go back to **Step 3**.
-    - **No**: Recommend running `writing-test` to verify your changes.
+- **Next Actions**: Ask user to choose:
+    1.  [Recommended] Run `writing-test` (Standard path).
+    2.  [Fast Track] Run `code-review` (Skip testing).
+    3.  [Custom] Input your own next step.

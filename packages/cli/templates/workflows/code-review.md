@@ -38,4 +38,7 @@ This workflow acts as a senior engineer peer-reviewing changes before they are c
 - Ask user if they want to apply fixes automatically or generic manual fixes.
 
 ## Step 7: Next Steps
-- **Next Actions**: Recommend running `check-implementation` to verify against requirements.
+- **Next Actions**: Ask user to choose:
+    1.  [Recommended] Run `check-implementation` (Standard path).
+    2.  [Fast Track] Run `capture-knowledge` (Skip final check).
+    3.  [Custom] Input your own next step.

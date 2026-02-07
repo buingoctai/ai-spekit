@@ -23,4 +23,7 @@ This workflow translates the approved design into a concrete checklist of tasks.
 
 ## Step 4: Session Summary
 - **Output**: Link to the new plan.
-- **Next Actions**: Recommend running `execute-plan` to start work.
+- **Next Actions**: Ask user to choose:
+    1.  [Recommended] Run `execute-plan` (Standard path).
+    2.  [Fast Track] Run `writing-test` (Skip execution helper).
+    3.  [Custom] Input your own next step.
