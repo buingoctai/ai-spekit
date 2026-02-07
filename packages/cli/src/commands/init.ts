@@ -100,11 +100,16 @@ export function registerInitCommand(program: Command, config: Config, templateMa
             }
 
             // 5. Generate AGENTS.md
+            let agentName = 'Antigravity';
+            if (contexts.includes('gemini')) agentName = 'Gemini';
+            else if (contexts.includes('claude')) agentName = 'Claude';
+            else if (contexts.includes('cursor')) agentName = 'Cursor';
+
             const agentsMdContent = `# Active Intelligence Agents
 
 This file tracks the agents active in this workspace.
 
-## Antigravity (Identity: Core)
+## ${agentName} (Identity: Core)
 - **Role**: Primary Orchestrator
 - **Capabilities**: Planning, coding, debugging, verification.
 - **Memory**: docs/ai/
