@@ -66,30 +66,26 @@ npm install
 - **Node.js** (latest LTS recommended)
 - **npm** (comes with Node.js)
 
-### Method A: Install via GitHub (For Users)
-The easiest way to use `spekit` globally without cloning the repo:
+### Installation (Local Link)
+Since this is a monorepo, the best way to install the CLI globally is to link it from the source:
 
-```bash
-npm install -g git+https://github.com/buingoctai/ai-spekit.git
-```
-
-### Method B: Local Linking (For Developers)
-Best for contributors who want to modify the code and see changes instantly:
-
-1. Navigate to the CLI package:
+1. **Install Dependencies** (from project root):
    ```bash
-   cd packages/cli
+   npm install
    ```
 
-2. Link the package globally:
+2. **Link the CLI**:
    ```bash
+   cd packages/cli
    npm link
    ```
 
-> **Usage Note**: Verify installation by running:
-> ```bash
-> spekit --version
-> ```
+3. **Verify Installation**:
+   ```bash
+   spekit --version
+   ```
+
+> **Note**: This creates a symbolic link. Any changes you make to the code will be immediately reflected in the `spekit` command.
 
 ### Structure
 - `packages/cli`: The core orchestrator.
