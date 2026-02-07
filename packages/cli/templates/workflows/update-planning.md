@@ -10,18 +10,19 @@ Keep the `task.md` and `plan.json` in sync with reality.
 - **Input**: What did we just finish? What failed?
 - **Context**: Read current plan files.
 
-## Step 3: Draft Plan
-- **Action**: Create the implementation plan.
-- **Filename**: `docs/ai/planning/[FEATURE-NAME].md`
-- **Template Content**:
-{{INCLUDE:phases/planning.md}}
-- **Fill**: Break down tasks into checklist items.
+## Step 2: Update Plan
+- **Action**: Update the existing implementation plan.
+- **Filename**: `docs/ai/planning/[feature-name].md` (target existing file).
+- **Task**:
+    - Mark completed items with `[x]`.
+    - Add new tasks if scope changed.
+    - Note blockers or issues.
 
 ## Step 3: Handle Blockers
 - **Identify**: Is a task blocked?
 - **Action**: Add specific blocker tag or dependency note.
 
-## Step 4: Re-estimage
+## Step 4: Re-estimate
 - **Question**: Do remaining tasks need more time/steps?
 - **Edit**: Add new sub-tasks if complexity was discovered.
 

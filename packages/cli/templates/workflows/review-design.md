@@ -12,7 +12,7 @@ This workflow validates technical designs before planning begins.
 
 ## Step 2: Draft/Update Design
 - **Action**: Create or update the design document.
-- **Filename**: `docs/ai/design/[FEATURE-NAME].md`
+- **Filename**: `docs/ai/design/[feature-name].md` (use lowercase kebab-case).
 - **Template Content**:
 {{INCLUDE:phases/design.md}}
 - **Fill**: Populate strict template.nsure alignment.
@@ -31,4 +31,4 @@ This workflow validates technical designs before planning begins.
 
 ## Step 5: Session Summary
 - **Output**: Implementation readiness score (1-5).
-- **Next Actions**: Recommend "Proceed to Planning" or specific refactors.
+- **Next Actions**: Recommend running `create-plan` to start planning.

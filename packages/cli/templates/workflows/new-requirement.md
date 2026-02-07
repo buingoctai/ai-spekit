@@ -18,7 +18,7 @@ This workflow transforms a raw idea into a structured Requirement Document.
 
 ## Step 3: Draft Structure
 - **Action**: Use the following template structure strictly.
-- **Filename**: Save as `docs/ai/requirements/[FEATURE-NAME].md` (use kebab-case for the filename).
+- **Filename**: Save as `docs/ai/requirements/[feature-name].md` (use lowercase kebab-case).
 - **Template Content**:
 {{INCLUDE:phases/requirements.md}}
 - **Fill**: Populate the template with gathered info. Do NOT deviate from this structure.

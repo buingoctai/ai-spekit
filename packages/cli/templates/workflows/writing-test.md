@@ -12,7 +12,7 @@ This workflow guides the creation of unit and integration tests.
 
 ## Step 2: Document Tests
 - **Action**: Create a test plan document.
-- **Filename**: `docs/ai/testing/[FEATURE-NAME].md`
+- **Filename**: `docs/ai/testing/[feature-name].md` (use lowercase kebab-case).
 - **Template Content**:
 {{INCLUDE:phases/testing.md}}
 - **Fill**: Detail test cases and scenarios.

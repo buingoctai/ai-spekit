@@ -28,7 +28,7 @@ This workflow guides the agent through the process of taking a planned feature f
 
 ## Step 2: Implementation Log
 - **Action**: Maintain a running log of changes.
-- **Filename**: `docs/ai/implementation/[FEATURE-NAME].md`
+- **Filename**: `docs/ai/implementation/[feature-name].md` (use lowercase kebab-case).
 - **Template Content**:
 {{INCLUDE:phases/implementation.md}}
 - **Update**: Record each significant change and decision.
