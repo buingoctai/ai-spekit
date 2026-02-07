@@ -52,4 +52,4 @@ This workflow guides the agent through the process of taking a planned feature f
 ## Step 8: Loop or Exit
 - **Decision**: Are there more tasks?
     - **Yes**: Go back to **Step 3**.
-    - **No**: Congratulate the user and exit workflow.
+    - **No**: Recommend running `writing-test` to verify your changes.

@@ -31,4 +31,4 @@ This workflow guides the creation of unit and integration tests.
 
 ## Step 5: Session Summary
 - **Output**: List of new tests added.
-- **Next Actions**: Run `check-implementation` to verify overall quality.
+- **Next Actions**: Recommend running `code-review` to finalize quality.

@@ -36,3 +36,6 @@ This workflow acts as a senior engineer peer-reviewing changes before they are c
 ## Step 6: Recommendations
 - Provide specific, actionable code snippets to fix found issues.
 - Ask user if they want to apply fixes automatically or generic manual fixes.
+
+## Step 7: Next Steps
+- **Next Actions**: Recommend running `check-implementation` to verify against requirements.

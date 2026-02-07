@@ -26,4 +26,4 @@ This workflow validates that the code matches the plan and design.
 
 ## Step 5: Session Summary
 - **Output**: Pass/Fail assessment.
-- **Next Actions**: Commit changes or run `simplify-implementation` if code is too complex.
+- **Next Actions**: Recommend running `capture-knowledge` to document findings.

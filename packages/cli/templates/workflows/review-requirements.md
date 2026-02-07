@@ -28,4 +28,4 @@ This workflow ensures that product requirements are ready for design and impleme
     - ✅ Approved items
     - ❓ Questions needing answer
     - ⚠️ Risks identified
-- **Next Actions**: Recommend either "Proceed to Design" or "Revise Requirements".
+- **Next Actions**: Recommend running `review-design` for the approved requirement.
