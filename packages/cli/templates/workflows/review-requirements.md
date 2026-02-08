@@ -29,6 +29,7 @@ This workflow ensures that product requirements are ready for design and impleme
     - ❓ Questions needing answer
     - ⚠️ Risks identified
 - **Next Actions**: Ask user to choose:
-    1.  [Recommended] Run `review-design` (Standard path).
-    2.  [Fast Track] Run `create-plan` (Skip design review).
+- **Next Actions**: Ask user to choose:
+    1.  [Recommended] Run `create-design` (Standard path).
+    2.  [Fast Track] Run `review-design` (Skip design creation - if existing).
     3.  [Custom] Input your own next step.

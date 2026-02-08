@@ -31,5 +31,5 @@ This workflow transforms a raw idea into a structured Requirement Document.
 - **Output**: Link to the new file.
 - **Next Actions**: Ask user to choose:
     1.  [Recommended] Run `review-requirements` (Standard path).
-    2.  [Fast Track] Run `review-design` (Skip requirement review).
+    2.  [Fast Track] Run `create-design` (Skip requirement review).
     3.  [Custom] Input your own next step.

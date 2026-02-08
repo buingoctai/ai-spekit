@@ -10,12 +10,11 @@ This workflow validates technical designs before planning begins.
 - Ask for the design document (in `docs/ai/design/`) and its parent requirement.
 - Read both documents to ensure alignment.
 
-## Step 2: Draft/Update Design
-- **Action**: Create or update the design document.
-- **Filename**: `docs/ai/design/[feature-name].md` (use lowercase kebab-case).
-- **Template Content**:
-{{INCLUDE:phases/design.md}}
-- **Fill**: Populate strict template.nsure alignment.
+
+## Step 2: Check Draft
+- **Action**: Verify the design document exists.
+- **Filename**: `docs/ai/design/[feature-name].md`.
+
 
 ## Step 3: Architecture Alignment
 - **Check**: Does this fit the Monorepo structure?
