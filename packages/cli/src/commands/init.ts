@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Config } from '../lib/Config';
 import { TemplateManager, Phase } from '../lib/TemplateManager';
-import { GeminiAdapter } from '../lib/environments';
+import { AdapterFactory } from '../lib/environments';
 import chalk from 'chalk';
 
 export function registerInitCommand(program: Command, config: Config, templateManager: TemplateManager) {
@@ -114,11 +114,11 @@ export function registerInitCommand(program: Command, config: Config, templateMa
                 console.log(chalk.green(`✔ Initialized phase directory: ${docsPath}/${phase}`));
             }
             
-            // Handle Gemini Environment
-            if (contexts.includes('gemini')) {
-                console.log(chalk.magenta('✔ Creating .gemini/commands for Gemini environment...'));
-                const geminiAdapter = new GeminiAdapter();
-                await geminiAdapter.generateCommands(process.cwd(), templateManager.getTemplatesDir(), docsPath);
+            // Handle environment-specific setup using AdapterFactory
+            const adapters = AdapterFactory.getAdapters(contexts);
+            for (const adapter of adapters) {
+                console.log(chalk.magenta(`✔ Setting up ${adapter.name} environment...`));
+                await adapter.generateCommands(process.cwd(), templateManager.getTemplatesDir(), docsPath);
             }
 
             // 5. Generate AGENTS.md

@@ -52,21 +52,33 @@ export class GeminiAdapter implements EnvironmentAdapter {
 
     /**
      * Process {{INCLUDE:path/to/file}} placeholders in the content.
+     * Collects all matches first, then replaces them to avoid index shifting issues.
      */
     private async processIncludes(content: string, workflowsDir: string, sourceFile: string): Promise<string> {
         const includeRegex = /{{INCLUDE:([\w\-\.\/]+)}}/g;
+        const matches: Array<{ fullMatch: string; includePath: string }> = [];
+        
+        // Collect all matches first
         let match;
-        let processedContent = content;
-
         while ((match = includeRegex.exec(content)) !== null) {
-            const includePath = match[1];
-            const fullIncludePath = path.resolve(workflowsDir, '../', includePath);
+            matches.push({
+                fullMatch: match[0],
+                includePath: match[1]
+            });
+        }
 
+        // Process each match and build replacement map
+        let processedContent = content;
+        for (const { fullMatch, includePath } of matches) {
+            const fullIncludePath = path.resolve(workflowsDir, '../', includePath);
+            
             try {
                 const includeContent = await fs.readFile(fullIncludePath, 'utf-8');
-                processedContent = processedContent.replace(match[0], includeContent);
+                // Use split/join for reliable replacement (handles special regex chars)
+                processedContent = processedContent.split(fullMatch).join(includeContent);
             } catch (err: any) {
                 console.warn(`Warning: Failed to include template '${includePath}' in '${sourceFile}': ${err.message}`);
+                processedContent = processedContent.split(fullMatch).join(`[Error loading include: ${includePath}]`);
             }
         }
 

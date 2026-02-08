@@ -4,3 +4,4 @@
  */
 export { EnvironmentAdapter } from './EnvironmentAdapter';
 export { GeminiAdapter } from './GeminiAdapter';
+export { AdapterFactory } from './AdapterFactory';
