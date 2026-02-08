@@ -27,6 +27,6 @@ This workflow validates that the code matches the plan and design.
 ## Step 5: Session Summary
 - **Output**: Pass/Fail assessment.
 - **Next Actions**: Ask user to choose:
-    1.  [Recommended] Run `capture-knowledge` (Standard path).
-    2.  [Fast Track] Run `new-requirement` (Loop to next feature).
+    1.  [Recommended] Run `{{CLI}} capture-knowledge` (Standard path).
+    2.  [Fast Track] Run `{{CLI}} new-requirement` (Loop to next feature).
     3.  [Custom] Input your own next step.

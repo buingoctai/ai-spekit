@@ -28,4 +28,4 @@ Keep the `task.md` and `plan.json` in sync with reality.
 
 ## Step 5: Session Summary
 - **Output**: Updated plan diff.
-- **Next Actions**: Execute next task.
+- **Next Actions**: Recommend running `{{CLI}} execute-plan` to resume implementation.

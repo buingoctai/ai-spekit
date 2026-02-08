@@ -53,6 +53,6 @@ This workflow guides the agent through the process of taking a planned feature f
 - **Decision**: Are there more tasks?
     - **Yes**: Go back to **Step 3**.
 - **Next Actions**: Ask user to choose:
-    1.  [Recommended] Run `writing-test` (Standard path).
-    2.  [Fast Track] Run `code-review` (Skip testing).
+    1.  [Recommended] Run `{{CLI}} writing-test` (Standard path).
+    2.  [Fast Track] Run `{{CLI}} code-review` (Skip testing).
     3.  [Custom] Input your own next step.

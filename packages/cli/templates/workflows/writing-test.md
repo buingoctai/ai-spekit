@@ -32,6 +32,6 @@ This workflow guides the creation of unit and integration tests.
 ## Step 5: Session Summary
 - **Output**: List of new tests added.
 - **Next Actions**: Ask user to choose:
-    1.  [Recommended] Run `code-review` (Standard path).
-    2.  [Fast Track] Run `check-implementation` (Skip code review).
+    1.  [Recommended] Run `{{CLI}} code-review` (Standard path).
+    2.  [Fast Track] Run `{{CLI}} check-implementation` (Skip code review).
     3.  [Custom] Input your own next step.

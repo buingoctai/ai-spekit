@@ -28,6 +28,6 @@ This workflow translates functional requirements into a technical specification.
 ## Step 4: Session Summary
 - **Output**: Link to the new design draft.
 - **Next Actions**: Ask user to choose:
-    1.  [Recommended] Run `review-design` (Standard path).
-    2.  [Fast Track] Run `create-plan` (Skip formal design review).
+    1.  [Recommended] Run `{{CLI}} review-design` (Standard path).
+    2.  [Fast Track] Run `{{CLI}} create-plan` (Skip formal design review).
     3.  [Custom] Input your own next step.

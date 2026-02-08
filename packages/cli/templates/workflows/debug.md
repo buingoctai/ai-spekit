@@ -24,4 +24,4 @@ Standard procedure for diagnosing and fixing bugs.
 
 ## Step 5: Session Summary
 - **Output**: Root cause analysis.
-- **Next Actions**: Add regression test to prevent recurrence.
+- **Next Actions**: Recommend running `{{CLI}} writing-test` to add a regression test.

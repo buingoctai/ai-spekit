@@ -39,6 +39,6 @@ This workflow acts as a senior engineer peer-reviewing changes before they are c
 
 ## Step 7: Next Steps
 - **Next Actions**: Ask user to choose:
-    1.  [Recommended] Run `check-implementation` (Standard path).
-    2.  [Fast Track] Run `capture-knowledge` (Skip final check).
+    1.  [Recommended] Run `{{CLI}} check-implementation` (Standard path).
+    2.  [Fast Track] Run `{{CLI}} capture-knowledge` (Skip final check).
     3.  [Custom] Input your own next step.

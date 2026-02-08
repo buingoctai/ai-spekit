@@ -25,4 +25,4 @@ This workflow refactors code to be cleaner and more maintainable.
 
 ## Step 5: Session Summary
 - **Output**: Summary of reductions (e.g., "-20 lines").
-- **Next Actions**: Proceed to next feature task.
+- **Next Actions**: Recommend running `{{CLI}} execute-plan` for the next task.

@@ -110,6 +110,9 @@ export class TemplateManager {
                     }
                 }
 
+                // Handle {{CLI}} placeholder
+                content = content.replace(/{{CLI}}/g, 'npx gemini');
+
                 const { description, body } = this.parseFrontMatter(content);
                 const commandName = path.basename(file, '.md');
 

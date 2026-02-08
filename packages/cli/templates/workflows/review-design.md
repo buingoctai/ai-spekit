@@ -31,6 +31,6 @@ This workflow validates technical designs before planning begins.
 ## Step 5: Session Summary
 - **Output**: Implementation readiness score (1-5).
 - **Next Actions**: Ask user to choose:
-    1.  [Recommended] Run `create-plan` (Standard path).
-    2.  [Fast Track] Run `execute-plan` (Skip planning).
+    1.  [Recommended] Run `{{CLI}} create-plan` (Standard path).
+    2.  [Fast Track] Run `{{CLI}} execute-plan` (Skip planning).
     3.  [Custom] Input your own next step.
