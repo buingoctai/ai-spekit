@@ -39,4 +39,4 @@ pnpm-debug.log*
 Thumbs.db
 
 # Temp
-tmp/
+apps/

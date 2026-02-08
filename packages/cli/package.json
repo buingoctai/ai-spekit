@@ -4,6 +4,7 @@
     "description": "CLI orchestrator for ai-spekit",
     "main": "dist/index.js",
     "bin": {
+        "gemini": "./dist/index.js",
         "spekit": "./dist/index.js"
     },
     "scripts": {
