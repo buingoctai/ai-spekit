@@ -4,6 +4,7 @@ import { Phase } from './TemplateManager';
 
 export interface ProjectState {
     version: string;
+    docsPath: string;
     initializedPhases: Phase[];
     environments?: string[];
     phases: Record<string, any>;

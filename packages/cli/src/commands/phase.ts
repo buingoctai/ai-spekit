@@ -5,16 +5,21 @@ import { TemplateManager, Phase } from '../lib/TemplateManager';
 import chalk from 'chalk';
 
 export function registerPhaseCommand(program: Command, config: Config, templateManager: TemplateManager) {
-    program.command('phase')
-        .description('Manage development phases')
-        .argument('<action>', 'Action to perform (start)')
+    const phaseCommand = program.command('phase')
+        .description('Manage development phases');
+
+    phaseCommand.command('start')
+        .description('Start a new phase document')
         .argument('[phase]', 'Phase name (requirements, design, planning, implementation, testing)')
-        .action(async (action, phase) => {
-            if (action !== 'start') {
-                console.log(chalk.red(`Unknown action: ${action}. Only 'start' is supported.`));
+        .action(async (phaseArg) => {
+            // Load config to get docsPath
+            const projectConfig = await config.load();
+            if (!projectConfig) {
+                console.log(chalk.red('Project not initialized. Run "spekit init" first.'));
                 return;
             }
 
+            let phase = phaseArg;
             if (!phase) {
                 // Interactive phase selection if not provided
                 const answer = await inquirer.prompt([
@@ -53,8 +58,10 @@ export function registerPhaseCommand(program: Command, config: Config, templateM
             ]);
 
             try {
+                // Pass the docsPath from config
                 const filePath = await templateManager.scaffoldDocument(
                     process.cwd(),
+                    projectConfig.docsPath,
                     phase as Phase,
                     answers.featureName,
                     answers.filename
@@ -67,6 +74,25 @@ export function registerPhaseCommand(program: Command, config: Config, templateM
 
             } catch (e: any) {
                 console.error(chalk.red(`Error: ${e.message}`));
+            }
+        });
+
+    phaseCommand.command('list')
+        .description('List all initialized phases')
+        .action(async () => {
+            const projectConfig = await config.load();
+            if (!projectConfig) {
+                console.log(chalk.red('Project not initialized. Run "spekit init" first.'));
+                return;
+            }
+
+            const phases = projectConfig.initializedPhases;
+            if (phases.length === 0) {
+                console.log(chalk.yellow('No phases initialized yet.'));
+                console.log(chalk.blue('Run "spekit phase start" to begin.'));
+            } else {
+                console.log(chalk.blue('Initialized phases:'));
+                phases.forEach((p) => console.log(chalk.green(`  ✔ ${p}`)));
             }
         });
 }

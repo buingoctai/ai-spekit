@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Config } from '../lib/Config';
 import { TemplateManager, Phase } from '../lib/TemplateManager';
+import { GeminiAdapter } from '../lib/environments';
 import chalk from 'chalk';
 
 export function registerInitCommand(program: Command, config: Config, templateManager: TemplateManager) {
@@ -17,6 +18,7 @@ export function registerInitCommand(program: Command, config: Config, templateMa
 
             let projectName = path.basename(process.cwd());
             let contexts: string[] = [];
+            let docsPath = 'docs/ai';
 
             // 1. Determine Project Name (skip prompt if we want, but usually init requires it? 
             // For now, let's keep it interactive only if not provided? 
@@ -46,6 +48,12 @@ export function registerInitCommand(program: Command, config: Config, templateMa
                         default: ['antigravity']
                     },
                     {
+                        type: 'input',
+                        name: 'docsPath',
+                        message: 'Where should documentation be stored?',
+                        default: 'docs/ai'
+                    },
+                    {
                         type: 'checkbox',
                         name: 'phases',
                         message: 'Which phases do you want to initialize now?',
@@ -55,6 +63,7 @@ export function registerInitCommand(program: Command, config: Config, templateMa
                 ]);
                 projectName = answers.projectName;
                 contexts = answers.environments;
+                docsPath = answers.docsPath;
                 targetPhases = answers.phases;
             } else {
                  // Non-interactive / Flag mode for environment
@@ -82,6 +91,7 @@ export function registerInitCommand(program: Command, config: Config, templateMa
             // 3. Initialize .ai-spekit.json
             const configState = {
                 version: '0.1.0',
+                docsPath: docsPath,
                 initializedPhases: targetPhases, 
                 environments: contexts,
                 phases: {},
@@ -94,20 +104,21 @@ export function registerInitCommand(program: Command, config: Config, templateMa
             console.log(chalk.green('✔ Initialized .ai-spekit.json'));
 
             // 4. Setup directory structure & Gemini
-            await fs.ensureDir(path.join(process.cwd(), 'docs/ai'));
-            console.log(chalk.green('✔ Created docs/ai directory'));
+            const fullDocsPath = path.join(process.cwd(), docsPath);
+            await fs.ensureDir(fullDocsPath);
+            console.log(chalk.green(`✔ Created ${docsPath} directory`));
 
             // Create phase directories if requested
             for (const phase of targetPhases) {
-                await fs.ensureDir(path.join(process.cwd(), 'docs/ai', phase));
-                console.log(chalk.green(`✔ Initialized phase directory: docs/ai/${phase}`));
+                await fs.ensureDir(path.join(fullDocsPath, phase));
+                console.log(chalk.green(`✔ Initialized phase directory: ${docsPath}/${phase}`));
             }
             
             // Handle Gemini Environment
             if (contexts.includes('gemini')) {
-                // await fs.ensureDir(path.join(process.cwd(), '.gemini/commands')); // Done inside generateGeminiCommands
                 console.log(chalk.magenta('✔ Creating .gemini/commands for Gemini environment...'));
-                await templateManager.generateGeminiCommands(process.cwd());
+                const geminiAdapter = new GeminiAdapter();
+                await geminiAdapter.generateCommands(process.cwd(), templateManager.getTemplatesDir(), docsPath);
             }
 
             // 5. Generate AGENTS.md
@@ -123,7 +134,7 @@ This file tracks the agents active in this workspace.
 ## ${agentName} (Identity: Core)
 - **Role**: Primary Orchestrator
 - **Capabilities**: Planning, coding, debugging, verification.
-- **Memory**: docs/ai/
+- **Memory**: ${docsPath}/
 
 ## User (Human)
 - **Role**: Product Owner / Reviewer
